@@ -1,8 +1,22 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Slider, Text } from "react-native";
 
-const Slidder = () => {
-  return <View>Slidder</View>;
+const Slidders = ({ max, unit, step, value, onChange }) => {
+  return (
+    <View>
+      <Slider
+        step={step}
+        value={value}
+        maximunValue={max}
+        minimumValue={0}
+        onValueChange={onChange}
+      />
+      <View>
+        <Text>{value}</Text>
+        <Text>{unit}</Text>
+      </View>
+    </View>
+  );
 };
 
-export default Slidder;
+export default Slidders;

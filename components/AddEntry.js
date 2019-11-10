@@ -1,9 +1,18 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import Steppers from "./Steppers";
 import Slidders from "./Slidders";
+import DateHeader from "./DateHeader";
 
-import { getMetricMetaInfo } from "../utils/helpers";
+import { getMetricMetaInfo, timeToString } from "../utils/helpers";
+
+function SubmitBtn({ onPress }) {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <Text>Submit</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default class AddEntry extends Component {
   state = {
@@ -13,6 +22,27 @@ export default class AddEntry extends Component {
     sleep: 0,
     eat: 0
   };
+  submit = () => {
+    const key = timeToString();
+    const entry = this.state;
+
+    // Update redux
+
+    this.setState(() => ({
+      run: 0,
+      bike: 0,
+      swim: 0,
+      sleep: 0,
+      eat: 0
+    }));
+
+    // Navigagte to home
+
+    // Save to DB
+
+    // Clear local notification
+  };
+
   increment = metric => {
     const { max, step } = getMetricMetaInfo(metric);
     this.setState(state => {
@@ -44,6 +74,8 @@ export default class AddEntry extends Component {
 
     return (
       <View>
+        <DateHeader date={new Date().toLocaleDateString()} />
+
         {Object.keys(metaInfo).map(key => {
           const { getIcon, type, ...rest } = metaInfo[key];
           const value = this.state[key];
@@ -68,6 +100,7 @@ export default class AddEntry extends Component {
             </View>
           );
         })}
+        <SubmitBtn onPress={this.submit} />
       </View>
     );
   }
