@@ -1,6 +1,7 @@
 # OSX
 #
 .DS_Store
+*ios
 
 # Xcode
 #
@@ -29,6 +30,8 @@ build/
 .gradle
 local.properties
 *.iml
+*android
+
 
 # node.js
 #
@@ -40,6 +43,7 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
+*__tests__
 
 # fastlane
 #
