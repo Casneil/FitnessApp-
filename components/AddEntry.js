@@ -6,6 +6,11 @@ import DateHeader from "./DateHeader";
 
 import { getMetricMetaInfo, timeToString } from "../utils/helpers";
 
+import { Ionicons } from "@expo/vector-icons";
+import TextButton from "./TextButton";
+
+import { RemoveEntry, SubmitEntry } from "../utils/api";
+
 function SubmitBtn({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -38,7 +43,7 @@ export default class AddEntry extends Component {
 
     // Navigagte to home
 
-    // Save to DB
+    SubmitEntry({ key, entry });
 
     // Clear local notification
   };
@@ -69,9 +74,24 @@ export default class AddEntry extends Component {
       [metric]: value
     }));
   };
+
+  reset = () => {
+    const key = timeToString();
+    // Update Redux
+    // Route to home
+    RemoveEntry(key);
+  };
   render() {
     const metaInfo = getMetricMetaInfo();
-
+    if (true) {
+      return (
+        <View>
+          <Ionicons name="ion-ios-happy-outline" size={100} />
+          <Text>You already logged your information for today</Text>
+          <TextButton onPress={this.reset}>Reset</TextButton>
+        </View>
+      );
+    }
     return (
       <View>
         <DateHeader date={new Date().toLocaleDateString()} />

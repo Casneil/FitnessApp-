@@ -21,22 +21,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      {/* <TouchableHighlight onPress={handlePress} underlayColor="black">
-        <Text style={styles.btn}>Touchable Highlight</Text>
-      </TouchableHighlight> */}
-
       <AddEntry />
-
-      {/* 
-      // TEST SLIDER
-      <Slider
-        minimumValue={-10}
-        maximumValue={10}
-        step={1}
-        value={value}
-        onValueChange={value => setValue(value)}
-      <Text>Value: {value}</Text>
-      /> */}
     </View>
   );
 };
