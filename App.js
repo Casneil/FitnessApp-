@@ -9,20 +9,21 @@ import {
   TouchableWithoutFeedback,
   Slider
 } from "react-native";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
+import reducer from "./reducers";
+
 import AddEntry from "./components/AddEntry";
 import { getState } from "expect/build/jestMatchersObject";
 
 const App = () => {
-  const [value, setValue] = useState(0);
-
-  handlePress = () => {
-    alert("Hello");
-  };
-
   return (
-    <View style={styles.container}>
-      <AddEntry />
-    </View>
+    <Provider store={createStore(reducer)}>
+      <View style={styles.container}>
+        <AddEntry />
+      </View>
+    </Provider>
   );
 };
 

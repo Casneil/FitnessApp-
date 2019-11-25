@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
+import { connect } from "react-redux";
+import { addEntries } from "../actions";
+
 import Steppers from "./Steppers";
 import Slidders from "./Slidders";
 import DateHeader from "./DateHeader";
-
-import { getMetricMetaInfo, timeToString } from "../utils/helpers";
-
+import {
+  getMetricMetaInfo,
+  timeToString,
+  getDailyReminderValue
+} from "../utils/helpers";
 import { Ionicons } from "@expo/vector-icons";
 import TextButton from "./TextButton";
-
 import { RemoveEntry, SubmitEntry } from "../utils/api";
 
 function SubmitBtn({ onPress }) {
@@ -19,7 +23,7 @@ function SubmitBtn({ onPress }) {
   );
 }
 
-export default class AddEntry extends Component {
+class AddEntry extends Component {
   state = {
     run: 0,
     bike: 0,
@@ -31,7 +35,11 @@ export default class AddEntry extends Component {
     const key = timeToString();
     const entry = this.state;
 
-    // Update redux
+    this.props.dispatch(
+      addEntries({
+        [key]: entry
+      })
+    );
 
     this.setState(() => ({
       run: 0,
@@ -77,13 +85,17 @@ export default class AddEntry extends Component {
 
   reset = () => {
     const key = timeToString();
-    // Update Redux
+    this.props.dispatch(
+      addEntry({
+        [key]: getDailyReminderValue()
+      })
+    );
     // Route to home
     RemoveEntry(key);
   };
   render() {
     const metaInfo = getMetricMetaInfo();
-    if (true) {
+    if (this.props.alreadyLogged) {
       return (
         <View>
           <Ionicons name="ion-ios-happy-outline" size={100} />
@@ -125,3 +137,12 @@ export default class AddEntry extends Component {
     );
   }
 }
+
+function maoStateToProps(state) {
+  const key = timeToString();
+  return {
+    alreadyLogged: state[key] && typeof state[key].today === "undefined"
+  };
+}
+
+export default connect(maoStateToProps)(AddEntry);
