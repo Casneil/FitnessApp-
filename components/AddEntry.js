@@ -27,8 +27,8 @@ function SubmitBtn({ onPress }) {
     <TouchableOpacity
       style={
         Platform.OS === "ios"
-          ? styles.iosSubmitButton
-          : styles.androidSubmitButton
+          ? styles.androidSubmitButton
+          : styles.iosSubmitButton
       }
       onPress={onPress}
     >
@@ -100,7 +100,7 @@ class AddEntry extends Component {
   reset = () => {
     const key = timeToString();
     this.props.dispatch(
-      addEntry({
+      addEntries({
         [key]: getDailyReminderValue()
       })
     );
@@ -111,10 +111,15 @@ class AddEntry extends Component {
     const metaInfo = getMetricMetaInfo();
     if (this.props.alreadyLogged) {
       return (
-        <View>
-          <Ionicons name="ion-ios-happy-outline" size={100} />
+        <View style={styles.center}>
+          <Ionicons
+            name={Platform.OS === "ios" ? "ios-happy-outline" : "md-happy"}
+            size={100}
+          />
           <Text>You already logged your information for today</Text>
-          <TextButton onPress={this.reset}>Reset</TextButton>
+          <TextButton style={{ padding: 10 }} onPress={this.reset}>
+            Reset
+          </TextButton>
         </View>
       );
     }
@@ -188,14 +193,21 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 22,
     textAlign: "center"
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 30,
+    marginRight: 30
   }
 });
 
-function maoStateToProps(state) {
+function mapStateToProps(state) {
   const key = timeToString();
   return {
     alreadyLogged: state[key] && typeof state[key].today === "undefined"
   };
 }
 
-export default connect(maoStateToProps)(AddEntry);
+export default connect(mapStateToProps)(AddEntry);
