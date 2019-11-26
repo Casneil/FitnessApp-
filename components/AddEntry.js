@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { addEntries } from "../actions";
 
@@ -14,11 +20,19 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import TextButton from "./TextButton";
 import { RemoveEntry, SubmitEntry } from "../utils/api";
+import { white, purple } from "../utils/colors";
 
 function SubmitBtn({ onPress }) {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Text>Submit</Text>
+    <TouchableOpacity
+      style={
+        Platform.OS === "ios"
+          ? styles.iosSubmitButton
+          : styles.androidSubmitButton
+      }
+      onPress={onPress}
+    >
+      <Text style={styles.submitButtonText}>Submit</Text>
     </TouchableOpacity>
   );
 }
@@ -105,7 +119,7 @@ class AddEntry extends Component {
       );
     }
     return (
-      <View>
+      <View style={styles.container}>
         <DateHeader date={new Date().toLocaleDateString()} />
 
         {Object.keys(metaInfo).map(key => {
@@ -113,7 +127,7 @@ class AddEntry extends Component {
           const value = this.state[key];
 
           return (
-            <View key={key}>
+            <View key={key} style={styles.row}>
               {getIcon()}
               {type === "slider" ? (
                 <Slidders
@@ -137,6 +151,45 @@ class AddEntry extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: white
+  },
+  row: {
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "center"
+  },
+  iosSubmitButton: {
+    backgroundColor: purple,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40
+  },
+  androidSubmitButton: {
+    backgroundColor: purple,
+    padding: 10,
+    // paddingLeft: 30,
+    paddingRight: 30,
+    borderRadius: 2,
+    alignSelf: "flex-end",
+    height: 45,
+    justifyContent: "center",
+    alignItems: "center"
+    // marginLeft: 40,
+    // marginRight: 40
+  },
+  submitButtonText: {
+    color: white,
+    fontSize: 22,
+    textAlign: "center"
+  }
+});
 
 function maoStateToProps(state) {
   const key = timeToString();
