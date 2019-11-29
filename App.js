@@ -17,6 +17,7 @@ import reducer from "./reducers";
 
 // import AddEntry from "./components/AddEntry";
 import History from "./components/History";
+import Live from "./components/Live";
 
 const App = () => {
   return (
