@@ -23,6 +23,7 @@ const App = () => {
   return (
     <Provider store={createStore(reducer)}>
       <View style={{ flex: 1 }}>
+        <View style={{ height: 20 }}></View>
         <History />
         {/* <AddEntry /> */}
       </View>
