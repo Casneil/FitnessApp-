@@ -14,7 +14,6 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 import reducer from "./reducers";
-import Loading from "./components/Loading";
 
 // import AddEntry from "./components/AddEntry";
 import History from "./components/History";
