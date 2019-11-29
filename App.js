@@ -14,16 +14,17 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 import reducer from "./reducers";
+import Loading from "./components/Loading";
 
-import AddEntry from "./components/AddEntry";
+// import AddEntry from "./components/AddEntry";
 import History from "./components/History";
-import { getState } from "expect/build/jestMatchersObject";
 
 const App = () => {
   return (
     <Provider store={createStore(reducer)}>
       <View style={{ flex: 1 }}>
         <View style={{ height: 20 }}></View>
+
         <History />
         {/* <AddEntry /> */}
       </View>
